@@ -1,8 +1,11 @@
 import csv
+import functools
+import operator
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import preprocessing as proc
+import random
 
 def main():
 
@@ -37,6 +40,12 @@ def main():
 	
 	print(dis_rgb)
 	
+	tables = []
+	tables.append(dis_shape)
+	tables.append(dis_rgb)
+	
+	MRDCA_RWG(tables, 7, 3)
+	
 def create_dissimilarity_matrix (table, row_nb, col_nb):
 
 		matriz = np.empty([row_nb, row_nb])
@@ -62,6 +71,75 @@ def normalize_table (values):
 	valores_normalizados = scaler.fit_transform(values)
 	
 	return pd.DataFrame(valores_normalizados)
+	
+	
+def MRDCA_RWG (tables, k, q):
+	
+	#vamos la, com calma
+	
+	t = 0
+	
+	#inicializando os pesos
+	weights = []
+	for  i in range(len(tables)):
+		weights.append(1)
+		
+	#inicializando os prototipos
+	g = []
+	numbers = list(range(len(tables[0])))
+	random.shuffle(numbers)
+	for i in range(k):
+		
+		g.append(numbers.pop())
+		
+	print(g);
+	
+	#inicializando as particoes
+	p = [[],[],[],[],[],[],[]]
+	for table in tables:
+		best_prototype = 0
+		
+		for i in table:
+			best_dist = 1000000000
+			print('outro loop')
+			for j in range(k):
+				if (i[g[j]] < best_dist):
+					best_dist = i[g[j]]
+					best_prototype = j
+					p[j].append(i)
+					print ('best_dist ' + str(best_dist))
+	print ('best ' + str(best_prototype))
+	#for i in range(tables)
+	print('partitions')
+	for i in range(len(p)):
+		print()
+		print(i)
+		print(p[i])
+		print()
+	
+	#step 1
+	test = 1
+	#while test != 0:
+	#	t += 1
+		
+		#step 2
+		
+		#step 3
+	#	test = 0
+		
+
+#def get_weight ():
+
+# def get_best_prototype (partition, dis_matrix, ): # Eq (12)
+	
+	# for elem in partition:
+		# result = 0
+		# for matrix in dis_matrix:
+			#result += 
+			
+# metodos auxiliares
+def produtorio (fatores):
+	return functools.reduce(operator.mul, fatores, 1)
 	
 main()
 	
