@@ -78,7 +78,7 @@ def getNeighbors(trainingSet, testInstance, k):
     distances = []
     length = len(testInstance) - 1
     for x in range(len(trainingSet)):
-        dist = euclideanDistance(testInstance, trainingSet[x], length)
+        dist = cityblock_distance(testInstance, trainingSet[x], length)
         distances.append((trainingSet[x], dist))
     distances.sort(key=operator.itemgetter(1))
     neighbors = []
