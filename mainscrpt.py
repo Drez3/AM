@@ -42,7 +42,7 @@ def main():
 	
 	tables = []
 	tables.append(dis_shape)
-	tables.append(dis_rgb)
+	#tables.append(dis_rgb)
 	
 	MRDCA_RWG(tables, 7, 3)
 	
@@ -85,12 +85,13 @@ def MRDCA_RWG (tables, k, q):
 		weights.append(1)
 		
 	#inicializando os prototipos
-	g = []
-	numbers = list(range(len(tables[0])))
-	random.shuffle(numbers)
-	for i in range(k):
+	g = [0,1,2,3,4,5,6]
+	# g = []
+	# numbers = list(range(len(tables[0])))
+	# random.shuffle(numbers)
+	# for i in range(k):
 		
-		g.append(numbers.pop())
+		# g.append(numbers.pop())
 		
 	print(g);
 	
@@ -98,16 +99,20 @@ def MRDCA_RWG (tables, k, q):
 	p = [[],[],[],[],[],[],[]]
 	for table in tables:
 		best_prototype = 0
-		
-		for i in table:
+		cur_row = 0
+		for row in table:
+			cur_row += 1
 			best_dist = 1000000000
+			row_2_append = -1
 			print('outro loop')
 			for j in range(k):
-				if (i[g[j]] < best_dist):
-					best_dist = i[g[j]]
+				if (row[g[j]] < best_dist):
+					best_dist = row[g[j]]
 					best_prototype = j
-					p[j].append(i)
-					print ('best_dist ' + str(best_dist))
+					row_2_append = cur_row
+					print ('new best_dist ' + str(best_dist))
+					print ('new best column ' +  str(j))
+			p[best_prototype].append(row_2_append)
 	print ('best ' + str(best_prototype))
 	#for i in range(tables)
 	print('partitions')
